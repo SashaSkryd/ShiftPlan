@@ -5,7 +5,7 @@ import './sass/main.scss'
 
 function App() {
   return (
-    <div className="container">
+    <div className="App">
       <TaskList/>
       <Graph/>
     </div>
