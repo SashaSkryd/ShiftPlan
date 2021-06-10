@@ -1,0 +1,19 @@
+@import "./mixin";
+
+.container {
+  padding-left: 20px;
+  padding-right: 25px;
+  padding-bottom: 64px;
+  @include for-size(tablet) {
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 51px;
+    padding-right: 52px;
+  }
+  @include for-size(desktop) {
+    width: 1280px;
+    padding-left: 110px;
+    padding-right: 110px;
+    padding-bottom: 83px;
+  }
+}
