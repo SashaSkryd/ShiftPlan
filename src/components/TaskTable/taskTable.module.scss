@@ -1,0 +1,39 @@
+table {
+  border-collapse: collapse;
+  
+}
+
+.number {
+  min-width: 20px;
+}
+
+.name {
+  min-width: 200px;
+}
+
+.shift {
+  min-width: 150px;
+}
+
+.shiftRow {
+  min-width: 1152px;
+}
+
+thead {
+  background-color: transparent;
+}
+
+tbody {
+  & td {
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+  }
+
+  & tr {
+    background-color: rgb(216, 216, 216);
+  }
+
+  & tr:nth-child(2n) {
+    background-color: transparent;
+  }
+}

@@ -1,49 +1,48 @@
 // .ruler-wraper{
 //     width: 100%;
 // }
-.ruler{
-    margin-left: 100px;
-    display: flex;
+.ruler {
+  display: flex;
+  height: 40px;
 }
 
-ul.ruler li{
-    // margin-right: 10px;
-    
-    min-width: 2px;
-    height: 10px;
-    &.first-point{
-        position: relative;
-        & ul{
-            display: flex;
-            
-            transform: rotate(180deg);
-            & li{
-                background-color: rgb(160, 135, 135);
-                // background-color: red;
-                // width: 2px;
-                margin-right: 2px;
-            }
-    & span {
-        position:absolute;
+ul.ruler li {
+  // margin-right: 10px;
 
+  min-width: 2px;
+  height: 10px;
+  &.first-point {
+    position: relative;
+    & ul {
+      display: flex;
+
+      transform: rotate(180deg);
+      & li {
+        background-color: rgb(160, 135, 135);
+        // background-color: red;
+        // width: 2px;
+        margin-right: 2px;
+      }
+      & span {
+        position: absolute;
+      }
     }
-   }
-    }
+  }
 }
-.time-indicator{
-    display: inline-block;
-    font-size: 16px;
-    transform: translateX(-45%);
+.time-indicator {
+  display: inline-block;
+  font-size: 16px;
+  transform: translateX(-45%);
 }
-.main-point{
-    min-height: 40px;
+.main-point {
+  min-height: 40px;
 }
-.small-point{
-    min-height: 10px;
+.small-point {
+  min-height: 10px;
 }
-.medium-point{
-    min-height: 20px;
+.medium-point {
+  min-height: 20px;
 }
-.high-point{
-    min-height: 30px;
+.high-point {
+  min-height: 30px;
 }
