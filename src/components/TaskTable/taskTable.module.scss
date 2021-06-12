@@ -37,3 +37,10 @@ tbody {
     background-color: transparent;
   }
 }
+.shiftCell{
+  min-width: 24px;
+  border-left: solid 1px black;
+  &:last-child{
+    border-right: solid 1px black;
+  }
+}
