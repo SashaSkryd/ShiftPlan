@@ -19,6 +19,22 @@ class Data {
 
     return workers;
   }
+
+  getTasks(quantity){
+    let tasks = [];
+
+    for (let i = 0; i < quantity; i++) {
+      tasks.push({
+        id: `${i + 1}`,
+        name: `Task name ${i + 1}`,
+        color_id: `${i + 1}`,
+        shift_key: '',
+      })      
+
+    }
+
+    return tasks;
+  }
 }
 
 export default new Data();
