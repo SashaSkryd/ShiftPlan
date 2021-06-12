@@ -1,11 +1,11 @@
-import React, { Component } from "react"
-import styles from "./taskTable.module.scss"
-import data from "../../workers"
+import React, { Component } from "react";
+import styles from "./taskTable.module.scss";
+import data from "../../workers";
 
 class TaskTable extends Component {
   state = {
-    workers: data.getWorkers(10),
-  }
+    workers: data.getWorkers(25),
+  };
 
   // getLines() {
   //   let numbers = [, , ,]
@@ -14,12 +14,10 @@ class TaskTable extends Component {
   // }
 
   render() {
-    const numbers = new Array(48)
-    for(let i = 0; i<numbers.length;i++){
-      numbers[i] = 1
+    const numbers = new Array(48);
+    for (let i = 0; i < numbers.length; i++) {
+      numbers[i] = 1;
     }
-    // console.log(numbers)
-    // console.log(this.state.workers)
     return (
       <table className={styles.taskTable}>
         <thead>
@@ -35,19 +33,15 @@ class TaskTable extends Component {
               <td className={styles.number}>{el.number}</td>
               <td className={styles.name}>{el.name}</td>
               <td className={styles.shift}>{el.shift.getFormat()}</td>
-              {/* <td className={styles.shiftRow}>shift</td> */}
-              {/* {this.getLines()} */}
-              {/* {this.getLines()} */}
               {numbers.map((el, i) => {
-                // console.log(1)
-               return <td key={i} className={styles.shiftCell}></td>
+                return <td key={i} className={styles.shiftCell}></td>;
               })}
             </tr>
           ))}
         </tbody>
       </table>
-    )
+    );
   }
 }
 
-export default TaskTable
+export default TaskTable;

@@ -18,7 +18,7 @@ ul.ruler li {
 
       transform: rotate(180deg);
       & li {
-        background-color: rgb(160, 135, 135);
+        background-color: rgb(173, 173, 173);
         // background-color: red;
         // width: 2px;
         margin-right: 2px;
@@ -31,8 +31,9 @@ ul.ruler li {
 }
 .time-indicator {
   display: inline-block;
-  font-size: 16px;
+  font-size: 10px;
   transform: translateX(-45%);
+  color: rgb(112, 112, 112);
 }
 .main-point {
   min-height: 40px;
