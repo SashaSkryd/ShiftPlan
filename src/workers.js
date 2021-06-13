@@ -7,6 +7,7 @@ class Data {
         number: `${i + 1}`,
         name: "John Wick",
         shift: {
+          tasks: [],
           shift_key: `${i + 1}`,
           start: "00:00",
           end: "01:00",

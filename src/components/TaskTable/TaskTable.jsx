@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import styles from "./taskTable.module.scss";
+import actions from "../../redux/actions/actions"
 import "./taskTable.scss";
 
 class TaskTable extends Component {
@@ -28,7 +29,13 @@ class TaskTable extends Component {
                 if (i === 0) {
                   return (
                     <td key={i} className="shiftCell firstCell">
-                      <div></div>
+                      <div data={i}
+                      // onDragStart={(e)=>{console.dir(e.target);}}
+                      onDragLeave={(e)=>{console.dir(e.target);}}
+                      // onDragEnd={(e)=>{console.dir(e.target);}}
+                      onDragOver={(e)=>{this.props.editShift(this.props.buffer) }}
+                      // onDrop={(e, task)=>{console.log(task);}}
+                      ></div>
                     </td>
                   );
                 } else {
@@ -42,7 +49,11 @@ class TaskTable extends Component {
     )
   }
 }
+const mapDispatchToProps = {
+  editShift: actions.editShift,
+  
+};
 
-const mapStateToProps = (state) => ({ workers: state.workers });
+const mapStateToProps = (state) => ({ workers: state.workers, buffer: state.buffer });
 
-export default connect(mapStateToProps, null)(TaskTable);
+export default connect(mapStateToProps, mapDispatchToProps)(TaskTable);

@@ -6,6 +6,8 @@ const removeTask = createAction("tasks/removeTask");
 const getWorkers = createAction("workers/getWorkers");
 const editShift = createAction("workers/editShift");
 
-const actions = { addTask, removeTask, getWorkers, editShift };
+const addBufferTask = createAction('buffer/addBufferTask');
+
+const actions = { addTask, removeTask, getWorkers, editShift, addBufferTask };
 
 export default actions;

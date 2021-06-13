@@ -20,15 +20,25 @@ const workers = createReducer(initWorkers, {
     return data.getWorkers(action.payload);
   },
   [actions.editShift]: (state, { payload }) => {
-    const worker = state.workers.find((el) => el.number === payload.id);
-    worker.shift = {
-      ...worker.shift,
-      start: payload.start,
-      end: payload.end,
-      sum: payload.sum,
-    };
-    return [...workers.filter((el) => el.id !== payload.id), worker];
+    const worker = state.find((el) => el.number === payload.id);
+    // worker.shift = {
+    //   ...worker.shift,
+    //   start: payload.start,
+    //   end: payload.end,
+    //   sum: payload.sum,
+    //   tasks: [...worker.shift.tasks, payload.task]
+    // };
+    // return [...state.filter((el) => el.id !== payload.id), worker];
+    // return worker.
   },
 });
 
-export default { tasks, workers };
+  const initBuffer = {}
+
+  const buffer = createReducer(initBuffer, {
+    [actions.addBufferTask]: (state, {payload})=>{
+      return {...payload}
+    }
+  })
+
+export default { tasks, workers, buffer };
