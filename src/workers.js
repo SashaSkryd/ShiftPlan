@@ -28,7 +28,6 @@ class Data {
       tasks.push({
         id: `${i + 1}`,
         name: `Task name ${i + 1}`,
-        color_id: `${i + 1}`,
         shift_key: "",
       });
     }

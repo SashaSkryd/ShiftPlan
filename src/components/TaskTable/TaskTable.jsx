@@ -39,7 +39,7 @@ class TaskTable extends Component {
           ))}
         </tbody>
       </table>
-    );
+    )
   }
 }
 

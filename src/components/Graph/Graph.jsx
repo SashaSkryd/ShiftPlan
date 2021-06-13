@@ -10,7 +10,7 @@ class Graph extends Component {
   clickHandler = () => {
     this.setState({ status: !this.state.status });
     setTimeout(() => {
-      this.setState({ bufferOpen: !this.state.bufferOpen})
+      this.setState({ bufferOpen: !this.state.bufferOpen });
     }, 250);
   };
 
