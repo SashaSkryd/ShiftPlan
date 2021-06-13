@@ -1,18 +1,9 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import styles from "./taskTable.module.scss";
-import data from "../../workers";
+import "./taskTable.scss";
 
 class TaskTable extends Component {
-  state = {
-    workers: data.getWorkers(25),
-  };
-
-  // getLines() {
-  //   let numbers = [, , ,]
-  //   console.log(numbers)
-  //   return numbers.map((el, i) => console.log(1))
-  // }
-
   render() {
     const numbers = new Array(48);
     for (let i = 0; i < numbers.length; i++) {
@@ -28,13 +19,21 @@ class TaskTable extends Component {
           </tr>
         </thead>
         <tbody>
-          {this.state.workers.map((el) => (
+          {this.props.workers.map((el) => (
             <tr key={el.number}>
               <td className={styles.number}>{el.number}</td>
               <td className={styles.name}>{el.name}</td>
               <td className={styles.shift}>{el.shift.getFormat()}</td>
               {numbers.map((el, i) => {
-                return <td key={i} className={styles.shiftCell}></td>;
+                if (i === 0) {
+                  return (
+                    <td key={i} className="shiftCell firstCell">
+                      <div></div>
+                    </td>
+                  );
+                } else {
+                  return <td key={i} className={styles.shiftCell}></td>;
+                }
               })}
             </tr>
           ))}
@@ -44,4 +43,6 @@ class TaskTable extends Component {
   }
 }
 
-export default TaskTable;
+const mapStateToProps = (state) => ({ workers: state.workers });
+
+export default connect(mapStateToProps, null)(TaskTable);

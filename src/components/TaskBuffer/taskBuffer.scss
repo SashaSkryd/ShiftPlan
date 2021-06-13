@@ -55,15 +55,17 @@
   height: 20px;
   padding: 0 5px;
   margin-left: 15px;
-  background-color: transparent;
-  color: #fff;
-  border-radius: 10px;
+  background-color: rgb(53, 70, 100);
+  color: rgb(172, 172, 172);
+  border: none;
+  font-weight: bold;
   transition: all 250ms linear;
   outline: none;
-  border: solid 1px #fff;
+  text-transform: uppercase;
+
   &:hover {
     cursor: pointer;
-    background-color: rgb(235, 235, 235);
+    background-color: rgb(171, 173, 11);
     color: black;
   }
 }

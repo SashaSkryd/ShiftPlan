@@ -7,6 +7,7 @@ class Data {
         number: `${i + 1}`,
         name: "John Wick",
         shift: {
+          shift_key: `${i + 1}`,
           start: "00:00",
           end: "01:00",
           sum: 1,
@@ -20,7 +21,7 @@ class Data {
     return workers;
   }
 
-  getTasks(quantity){
+  getTasks(quantity) {
     let tasks = [];
 
     for (let i = 0; i < quantity; i++) {
@@ -28,9 +29,8 @@ class Data {
         id: `${i + 1}`,
         name: `Task name ${i + 1}`,
         color_id: `${i + 1}`,
-        shift_key: '',
-      })      
-
+        shift_key: "",
+      });
     }
 
     return tasks;

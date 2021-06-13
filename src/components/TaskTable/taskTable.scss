@@ -1,0 +1,23 @@
+.firstCell {
+  position: relative;
+
+  & > div {
+    position: absolute;
+    height: 23px;
+    min-width: 50px;
+    padding: 0 5px;
+    border: solid 1px black;
+    border-radius: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #fff;
+  }
+}
+
+.shiftCell {
+  min-width: 24px;
+  border-left: solid 2px rgb(173, 173, 173);
+  &:last-child {
+    border-right: solid 2px rgb(173, 173, 173);
+  }
+}
