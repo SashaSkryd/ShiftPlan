@@ -6,15 +6,16 @@ class Data {
       workers.push({
         number: `${i + 1}`,
         name: "John Wick",
+        tasks: new Array(),
         shift: {
-          tasks: [],
           shift_key: `${i + 1}`,
           start: "00:00",
           end: "01:00",
           sum: 1,
-          getFormat: function () {
-            return `${this.start} - ${this.end} (${this.sum}h.)`; //Форматирует под таблицу, удобнее иметь все эти значения по отдельности
-          },
+          format: `${this.start} - ${this.end} (${this.sum}h.)`,
+          // function () {
+          //   return `${this.start} - ${this.end} (${this.sum}h.)`; //Форматирует под таблицу, удобнее иметь все эти значения по отдельности
+          // },
         },
       });
     }

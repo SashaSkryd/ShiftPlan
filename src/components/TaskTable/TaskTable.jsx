@@ -20,26 +20,28 @@ class TaskTable extends Component {
           </tr>
         </thead>
         <tbody>
-          {this.props.workers.map((el) => (
-            <tr key={el.number}>
+          {this.props.workers.map((el,i) => (
+            <tr key={el.number} >
               <td className={styles.number}>{el.number}</td>
               <td className={styles.name}>{el.name}</td>
-              <td className={styles.shift}>{el.shift.getFormat()}</td>
-              {numbers.map((el, i) => {
-                if (i === 0) {
+              <td className={styles.shift}>{el.shift.format}</td>
+              {numbers.map((el, z) => {
+                if (z === 0) {
                   return (
-                    <td key={i} className="shiftCell firstCell">
-                      <div data={i}
+                    <td key={z} className="shiftCell firstCell">
+                      <div
                       // onDragStart={(e)=>{console.dir(e.target);}}
-                      onDragLeave={(e)=>{console.dir(e.target);}}
+                      // onDragLeave={(e)=>{this.props.editShift({task: this.props.buffer, id: i+1})}}
                       // onDragEnd={(e)=>{console.dir(e.target);}}
-                      onDragOver={(e)=>{this.props.editShift(this.props.buffer) }}
+                      onDragOver={(e)=>{this.props.editShift({task: this.props.buffer, id: i+1})}}
                       // onDrop={(e, task)=>{console.log(task);}}
+                      // this.props.editShift() {task: this.props.buffer, id: }
                       ></div>
                     </td>
                   );
-                } else {
-                  return <td key={i} className={styles.shiftCell}></td>;
+                } 
+                else {
+                  return <td key={z} className={styles.shiftCell}></td>;
                 }
               })}
             </tr>
