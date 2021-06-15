@@ -51,3 +51,26 @@ tbody {
     border-right: solid 2px rgb(173, 173, 173);
   }
 }
+.workerTask {
+  background-color: rgb(171, 173, 11);
+  height: 20px;
+  // flex-wrap  : nowrap;
+  min-width: 91px;
+  text-align: center;
+  // width: fit-content ;
+  border-radius: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  font-size: 13px;
+
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  user-select: none;
+
+  &:hover {
+    cursor: grab;
+  }
+  &:not(:first-child){
+    margin-left: 2px;
+  }
+}

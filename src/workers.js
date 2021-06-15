@@ -12,8 +12,7 @@ class Data {
           start: "00:00",
           end: "01:00",
           sum: 1,
-          format: `${this.start} - ${this.end} (${this.sum}h.)`,
-          // function () {
+          // format: function () {
           //   return `${this.start} - ${this.end} (${this.sum}h.)`; //Форматирует под таблицу, удобнее иметь все эти значения по отдельности
           // },
         },

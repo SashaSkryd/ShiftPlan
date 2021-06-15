@@ -6,6 +6,7 @@ const rootReducer = combineReducers({
   tasks: reducers.tasks,
   workers: reducers.workers,
   buffer: reducers.buffer,
+  tableBuffer: reducers.tableBuffer,
 });
 
 const store = configureStore({
