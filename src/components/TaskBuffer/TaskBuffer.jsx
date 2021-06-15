@@ -82,10 +82,10 @@ class TaskBuffer extends Component {
                     this.props.addBufferTask({...el})
                     // console.log();
                   }}
-                  onDragLeave={(e)=>{console.dir(e.target);}}
+                  // onDragLeave={(e)=>{console.dir(e.target);}}
                   onDragEnd={(e)=>{console.dir(e.target);}}
-                  onDragOver={(e)=>{console.dir(e.target);}}
-                  onDrop={(e)=>{console.dir(e.target);}}
+                  // onDragOver={(e)=>{console.dir(e.target);}}
+                  // onDrop={(e)=>{console.dir(e.target);}}
                   draggable={true}
                   key={el.id}
                   // style={

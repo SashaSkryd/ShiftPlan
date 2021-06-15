@@ -10,6 +10,7 @@ class TaskTable extends Component {
     for (let i = 0; i < numbers.length; i++) {
       numbers[i] = 1;
     }
+    let workers = [...this.props.workers]
     return (
       <table className={styles.taskTable}>
         <thead>
@@ -20,7 +21,7 @@ class TaskTable extends Component {
           </tr>
         </thead>
         <tbody>
-          {this.props.workers.map((el,i) => (
+          {workers.sort((a,b)=>a.number - b.number).map((el,i) => (
             <tr key={el.number} >
               <td className={styles.number}>{el.number}</td>
               <td className={styles.name}>{el.name}</td>
@@ -59,3 +60,5 @@ const mapDispatchToProps = {
 const mapStateToProps = (state) => ({ workers: state.workers, buffer: state.buffer });
 
 export default connect(mapStateToProps, mapDispatchToProps)(TaskTable);
+
+ 
