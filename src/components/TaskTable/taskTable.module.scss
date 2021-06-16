@@ -70,7 +70,28 @@ tbody {
   &:hover {
     cursor: grab;
   }
-  &:not(:first-child){
+  &:not(:first-child) {
     margin-left: 2px;
+  }
+}
+.leftSide {
+  cursor: col-resize;
+  width: 5px;
+  height: 100%;
+  background-color: lightgrey;
+  transition: all 250ms linear;
+  &:hover{
+    background-color: grey;
+  }
+}
+.rightSide {
+  cursor: col-resize;
+  width: 5px;
+  height: 100%;
+  background-color: lightgrey;
+  transition: all 250ms linear;
+  margin-left: auto;
+  &:hover{
+    background-color: grey;
   }
 }

@@ -1,4 +1,5 @@
 class Data {
+  workers = [];
   getWorkers(quantity) {
     let workers = [];
 
@@ -9,16 +10,16 @@ class Data {
         tasks: new Array(),
         shift: {
           shift_key: `${i + 1}`,
-          start: "00:00",
-          end: "01:00",
-          sum: 1,
+          start: "01:00",
+          end: "07:00",
+          
           // format: function () {
           //   return `${this.start} - ${this.end} (${this.sum}h.)`; //Форматирует под таблицу, удобнее иметь все эти значения по отдельности
           // },
         },
       });
     }
-
+    this.workers = workers
     return workers;
   }
 
