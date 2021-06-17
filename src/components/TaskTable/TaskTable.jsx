@@ -6,16 +6,30 @@ import actions from "../../redux/actions/actions"
 import "./taskTable.scss"
 
 class TaskTable extends Component {
-  state = {
-    width: 1,
-    // height: 24,
-  }
+  mouseDown = (e, c, time) => {
+    console.dir(e.target);
+    // console.log(time);
+    let startX = e.clientX
+    const mouseUp = () => {
+      document.getElementById(`${c}`).onmousemove = null
+      document.getElementById(`${c}`).onmouseup = null
+    }
 
-  onResize = (event, { element, size, handle }) => {
-    this.setState({
-      width: size.width,
-      //  height: size.height
-    })
+    const mouseMove = (e) => {
+      // console.log(document.getElementById(`${c}`));
+      let width =0; 
+      if(startX < e.clientX){
+        width = e.clientX - startX
+        document.getElementById(`${c}`).outerHTML = `<div id="0" style="width: ${width + parseInt(time, 10)}px; margin-left: 48px;"><div class="taskTable_leftSide__2J-5G"></div><div class="taskTable_rightSide__yq-s0"></div></div>`
+      }else if (startX > e.clientX){
+        width = startX - e.clientX
+        document.getElementById(`${c}`).outerHTML = `<div id="0" style="width: ${width + parseInt(time, 10)}px; margin-left: 48px;"><div class="taskTable_leftSide__2J-5G"></div><div class="taskTable_rightSide__yq-s0"></div></div>`
+      }
+
+    }
+
+    document.getElementById(`${c}`).onmousemove = mouseMove
+    document.getElementById(`${c}`).onmouseup = mouseUp
   }
 
   render() {
@@ -39,7 +53,10 @@ class TaskTable extends Component {
             let sum = parseInt(workerEl.shift.end, 10) - parseInt(workerEl.shift.start, 10)
             let time = "48px"
             time = `${parseInt(time, 10) * sum}px`
-            console.log(parseInt(time, 10) * sum)
+
+            // time = `${time + this.state.width}px`
+            // `${parseInt(time, 10) * sum}px`
+            // console.log(parseInt(time, 10) * sum)
             let startTime = `${parseInt(workerEl.shift.start, 10) * 48}px`
 
             return (
@@ -51,19 +68,12 @@ class TaskTable extends Component {
                   if (z === 0) {
                     return (
                       <td key={z} className="shiftCell firstCell">
-                        {/* <Resizable height={this.state.height} width={this.state.width} onResize={this.onResize}> */}
-
                         <div
+                          id={c}
                           style={{
-                            minWidth: time,
+                            width: time,
                             marginLeft: startTime,
-                            width: this.state.width + "px",
-                            // height: this.state.height + "px",
                           }}
-                          // onDragStart={(e) => {
-
-                          // }}
-
                           onDragOver={(e) => {
                             e.preventDefault()
                           }}
@@ -82,10 +92,13 @@ class TaskTable extends Component {
                               this.props.removeTableBufferTask()
                             }
                           }}
-                          
-                          // draggable={true}
                         >
-                          <div className = {styles.leftSide}></div>
+                          <div
+                            className={styles.leftSide}
+                            onMouseDown={(e) => {
+                              this.mouseDown(e, c)
+                            }}
+                          ></div>
                           {workers[c].tasks.map((el, i) => (
                             <div
                               key={i}
@@ -98,9 +111,13 @@ class TaskTable extends Component {
                               {el.name}
                             </div>
                           ))}
-                          <div className={styles.rightSide}></div>
+                          <div
+                            className={styles.rightSide}
+                            onMouseDown={(e) => {
+                              this.mouseDown(e, c, time)
+                            }}
+                          ></div>
                         </div>
-                        {/* </Resizable> */}
                       </td>
                     )
                   } else {
