@@ -3,33 +3,54 @@ import { connect } from "react-redux"
 import styles from "./taskTable.module.scss"
 import actions from "../../redux/actions/actions"
 // import { Resizable } from 'react-resizable';
+import ResizableBox from "react-resizable-component"
 import "./taskTable.scss"
 
 class TaskTable extends Component {
   mouseDown = (e, c, time) => {
-    console.dir(e.target);
-    // console.log(time);
     let startX = e.clientX
     const mouseUp = () => {
-      document.getElementById(`${c}`).onmousemove = null
-      document.getElementById(`${c}`).onmouseup = null
+      window.onmousemove = null
+      window.onmouseup = null
     }
 
+    let leftSide = e.target.id
+
+    let prevWidth = parseInt(document.getElementById(`${c}`).style.width, 10)
+    let prevMargin = parseInt(document.getElementById(`${c}`).style.marginLeft, 10)
     const mouseMove = (e) => {
-      // console.log(document.getElementById(`${c}`));
-      let width =0; 
-      if(startX < e.clientX){
-        width = e.clientX - startX
-        document.getElementById(`${c}`).outerHTML = `<div id="0" style="width: ${width + parseInt(time, 10)}px; margin-left: 48px;"><div class="taskTable_leftSide__2J-5G"></div><div class="taskTable_rightSide__yq-s0"></div></div>`
-      }else if (startX > e.clientX){
-        width = startX - e.clientX
-        document.getElementById(`${c}`).outerHTML = `<div id="0" style="width: ${width + parseInt(time, 10)}px; margin-left: 48px;"><div class="taskTable_leftSide__2J-5G"></div><div class="taskTable_rightSide__yq-s0"></div></div>`
+      let width = 0
+      let marginLeft = 0
+      if (leftSide === `${c + 100}`) {
+        if (startX < e.clientX) {
+          console.log(1)
+          marginLeft = e.clientX + prevMargin - startX
+          document.getElementById(`${c}`).style.marginLeft = `${marginLeft}px`
+          width = prevWidth - (e.clientX - startX)
+          document.getElementById(`${c}`).style.width = `${width}px`
+        } else {
+          marginLeft = prevMargin - (startX - e.clientX)
+          document.getElementById(`${c}`).style.marginLeft = `${marginLeft}px`
+          width = prevWidth + (startX - e.clientX)
+          document.getElementById(`${c}`).style.width = `${width}px`
+        }
+      } else {
+        if (startX < e.clientX) {
+          width = e.clientX + prevWidth - startX
+          document.getElementById(`${c}`).style.width = `${width}px`
+        } else {
+          width = prevWidth - (startX - e.clientX)
+          document.getElementById(`${c}`).style.width = `${width}px`
+          if (parseInt(document.getElementById(`${c}`).style.width, 10) <= 48) {
+            marginLeft = prevMargin - (startX - e.clientX)
+            document.getElementById(`${c}`).style.marginLeft = `${marginLeft}px`
+          }
+        }
       }
-
     }
 
-    document.getElementById(`${c}`).onmousemove = mouseMove
-    document.getElementById(`${c}`).onmouseup = mouseUp
+    window.onmousemove = mouseMove
+    window.onmouseup = mouseUp
   }
 
   render() {
@@ -68,6 +89,7 @@ class TaskTable extends Component {
                   if (z === 0) {
                     return (
                       <td key={z} className="shiftCell firstCell">
+                        {/* <ResizableBox > */}
                         <div
                           id={c}
                           style={{
@@ -94,6 +116,7 @@ class TaskTable extends Component {
                           }}
                         >
                           <div
+                            id={c + 100}
                             className={styles.leftSide}
                             onMouseDown={(e) => {
                               this.mouseDown(e, c)
@@ -118,6 +141,7 @@ class TaskTable extends Component {
                             }}
                           ></div>
                         </div>
+                        {/* </ResizableBox>/ */}
                       </td>
                     )
                   } else {
