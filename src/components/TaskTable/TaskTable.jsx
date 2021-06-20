@@ -50,6 +50,16 @@ class TaskTable extends Component {
             document.getElementById(`${c}`).style.width = `${width}px`;
           }
         }
+        // const currentMargin = parseInt(
+        //   document.getElementById(`${c}`).style.marginLeft,
+        //   10,
+        // );
+        // const currentWidth = parseInt(
+        //   document.getElementById(`${c}`).style.width,
+        //   10,
+        // );
+        // console.log(`${Math.round((currentMargin/48) * 60)} минут`);
+        // console.log(`${(currentMargin/48)} hours, ${} minutes`)
       } else if (elementSide === `${c + 100}rightSide`) {
         // Правый ползунок
         if (startX < e.clientX) {
