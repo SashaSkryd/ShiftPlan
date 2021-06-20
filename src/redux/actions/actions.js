@@ -6,13 +6,25 @@ const removeTask = createAction("tasks/removeTask");
 const getWorkers = createAction("workers/getWorkers");
 const editShift = createAction("workers/editShift");
 const removeShift = createAction("workers/removeShift");
- 
-const addBufferTask = createAction('buffer/addBufferTask');
-const removeBufferTask = createAction('buffer/removeBufferTask')
+const editShiftTime = createAction("workers/editShiftTime");
 
-const addTableBufferTask = createAction('tableBuffer/addTableBufferTask');
-const removeTableBufferTask = createAction('tableBuffer/removeTableBufferTask');
+const addBufferTask = createAction("buffer/addBufferTask");
+const removeBufferTask = createAction("buffer/removeBufferTask");
 
-const actions = { addTask, removeTask, getWorkers, editShift, addBufferTask, removeBufferTask, removeShift, addTableBufferTask, removeTableBufferTask };
+const addTableBufferTask = createAction("tableBuffer/addTableBufferTask");
+const removeTableBufferTask = createAction("tableBuffer/removeTableBufferTask");
+
+const actions = {
+  addTask,
+  removeTask,
+  getWorkers,
+  editShift,
+  addBufferTask,
+  removeBufferTask,
+  removeShift,
+  addTableBufferTask,
+  removeTableBufferTask,
+  editShiftTime,
+};
 
 export default actions;

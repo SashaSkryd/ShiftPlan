@@ -4,12 +4,57 @@ import actions from "../../redux/actions/actions";
 import styles from "./taskTable.module.scss";
 import "./taskTable.scss";
 
+const getFormat = function (hours, minutes) {
+  return `${hours.length > 1 ? hours : `0${hours}`}:${
+    minutes.length > 1 ? minutes : `0${minutes}`
+  }`;
+};
+
 class TaskTable extends Component {
   mouseDown = (e, c) => {
     let startX = e.clientX;
+
     const mouseUp = () => {
       window.onmousemove = null;
       window.onmouseup = null;
+
+      const currentMargin = parseInt(
+        document.getElementById(`${c}`).style.marginLeft,
+        10,
+      );
+      const currentWidth = parseInt(
+        document.getElementById(`${c}`).style.width,
+        10,
+      );
+
+      let startHours = `${Math.trunc(currentMargin / 48)}`;
+      let startMinutes = `${Math.round(
+        (currentMargin / 48 - Math.trunc(currentMargin / 48)) * 60,
+      )}`;
+
+      let endHours = `${
+        Math.trunc(currentWidth / 48) + Math.trunc(currentMargin / 48)
+      }`;
+      let endMinutes = `${
+        Math.round((currentMargin / 48 - Math.trunc(currentMargin / 48)) * 60) +
+        Math.round((currentWidth / 48 - Math.trunc(currentWidth / 48)) * 60)
+      }`;
+
+      // let sumHours = `${Math.trunc(currentWidth / 48)}`;
+      // let sumMinutes = `${Math.round(
+      //   (currentWidth / 48 - Math.trunc(currentWidth / 48)) * 60,
+      // )}`;
+
+      const payload = {
+        id: `${c + 1}`,
+        shift: {
+          shift_key: `${c + 1}`,
+          start: getFormat(startHours, "0"),
+          end: getFormat(endHours, "0"),
+        },
+      };
+
+      this.props.editShiftTime({ ...payload });
     };
 
     let elementSide = e.target.id;
@@ -19,6 +64,7 @@ class TaskTable extends Component {
       document.getElementById(`${c}`).style.marginLeft,
       10,
     );
+
     const mouseMove = (e) => {
       let width = 0;
       let marginLeft = 0;
@@ -50,16 +96,6 @@ class TaskTable extends Component {
             document.getElementById(`${c}`).style.width = `${width}px`;
           }
         }
-        // const currentMargin = parseInt(
-        //   document.getElementById(`${c}`).style.marginLeft,
-        //   10,
-        // );
-        // const currentWidth = parseInt(
-        //   document.getElementById(`${c}`).style.width,
-        //   10,
-        // );
-        // console.log(`${Math.round((currentMargin/48) * 60)} минут`);
-        // console.log(`${(currentMargin/48)} hours, ${} minutes`)
       } else if (elementSide === `${c + 100}rightSide`) {
         // Правый ползунок
         if (startX < e.clientX) {
@@ -200,6 +236,7 @@ const mapDispatchToProps = {
   addTableBufferTask: actions.addTableBufferTask,
   removeTableBufferTask: actions.removeTableBufferTask,
   removeBufferTask: actions.removeBufferTask,
+  editShiftTime: actions.editShiftTime,
 };
 
 const mapStateToProps = (state) => ({
