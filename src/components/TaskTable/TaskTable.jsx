@@ -1,64 +1,75 @@
-import React, { Component } from "react"
-import { connect } from "react-redux"
-import styles from "./taskTable.module.scss"
-import actions from "../../redux/actions/actions"
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import styles from "./taskTable.module.scss";
+import actions from "../../redux/actions/actions";
 // import { Resizable } from 'react-resizable';
-import ResizableBox from "react-resizable-component"
-import "./taskTable.scss"
+import ResizableBox from "react-resizable-component";
+import "./taskTable.scss";
 
 class TaskTable extends Component {
   mouseDown = (e, c, time) => {
-    let startX = e.clientX
+    let startX = e.clientX;
     const mouseUp = () => {
-      window.onmousemove = null
-      window.onmouseup = null
-    }
+      window.onmousemove = null;
+      window.onmouseup = null;
+    };
 
-    let leftSide = e.target.id
+    let elementSide = e.target.id;
 
-    let prevWidth = parseInt(document.getElementById(`${c}`).style.width, 10)
-    let prevMargin = parseInt(document.getElementById(`${c}`).style.marginLeft, 10)
+    let prevWidth = parseInt(document.getElementById(`${c}`).style.width, 10);
+    let prevMargin = parseInt(
+      document.getElementById(`${c}`).style.marginLeft,
+      10,
+    );
     const mouseMove = (e) => {
-      let width = 0
-      let marginLeft = 0
-      if (leftSide === `${c + 100}`) {
+      let width = 0;
+      let marginLeft = 0;
+
+      if (elementSide === `${c + 100}leftSide`) {
+        // Левый ползунок
         if (startX < e.clientX) {
-          console.log(1)
-          marginLeft = e.clientX + prevMargin - startX
-          document.getElementById(`${c}`).style.marginLeft = `${marginLeft}px`
-          width = prevWidth - (e.clientX - startX)
-          document.getElementById(`${c}`).style.width = `${width}px`
-        } else {
-          marginLeft = prevMargin - (startX - e.clientX)
-          document.getElementById(`${c}`).style.marginLeft = `${marginLeft}px`
-          width = prevWidth + (startX - e.clientX)
-          document.getElementById(`${c}`).style.width = `${width}px`
-        }
-      } else {
-        if (startX < e.clientX) {
-          width = e.clientX + prevWidth - startX
-          document.getElementById(`${c}`).style.width = `${width}px`
-        } else {
-          width = prevWidth - (startX - e.clientX)
-          document.getElementById(`${c}`).style.width = `${width}px`
-          if (parseInt(document.getElementById(`${c}`).style.width, 10) <= 48) {
-            marginLeft = prevMargin - (startX - e.clientX)
-            document.getElementById(`${c}`).style.marginLeft = `${marginLeft}px`
+          // В правую сторону
+          if (parseInt(document.getElementById(`${c}`).style.width, 10) > 48) {
+            marginLeft = prevMargin + (e.clientX - startX); // Увеличиваем маржин на разницу координат
+            document.getElementById(
+              `${c}`,
+            ).style.marginLeft = `${marginLeft}px`;
+
+            width = prevWidth - (e.clientX - startX); // Уменьшаем ширину на разницу координат
+            document.getElementById(`${c}`).style.width = `${width}px`;
           }
+        } else {
+          // В левую сторону
+          marginLeft = prevMargin - (startX - e.clientX);
+          document.getElementById(`${c}`).style.marginLeft = `${marginLeft}px`;
+
+          width = prevWidth + (startX - e.clientX);
+          document.getElementById(`${c}`).style.width = `${width}px`;
+        }
+      } else if (elementSide === `${c + 100}rightSide`) {
+        // Правый ползунок
+        if (startX < e.clientX) {
+          // В правую сторону
+          width = prevWidth + (e.clientX - startX);
+          document.getElementById(`${c}`).style.width = `${width}px`;
+        } else {
+          // В левую сторону
+          width = prevWidth - (startX - e.clientX);
+          document.getElementById(`${c}`).style.width = `${width}px`;
         }
       }
-    }
+    };
 
-    window.onmousemove = mouseMove
-    window.onmouseup = mouseUp
-  }
+    window.onmousemove = mouseMove;
+    window.onmouseup = mouseUp;
+  };
 
   render() {
-    const numbers = new Array(48)
+    const numbers = new Array(48);
     for (let i = 0; i < numbers.length; i++) {
-      numbers[i] = 1
+      numbers[i] = 1;
     }
-    let workers = [...this.props.workers]
+    let workers = [...this.props.workers];
 
     return (
       <table className={styles.taskTable}>
@@ -71,20 +82,24 @@ class TaskTable extends Component {
         </thead>
         <tbody>
           {workers.map((workerEl, c) => {
-            let sum = parseInt(workerEl.shift.end, 10) - parseInt(workerEl.shift.start, 10)
-            let time = "48px"
-            time = `${parseInt(time, 10) * sum}px`
+            let sum =
+              parseInt(workerEl.shift.end, 10) -
+              parseInt(workerEl.shift.start, 10);
+            let time = "48px";
+            time = `${parseInt(time, 10) * sum}px`;
 
             // time = `${time + this.state.width}px`
             // `${parseInt(time, 10) * sum}px`
             // console.log(parseInt(time, 10) * sum)
-            let startTime = `${parseInt(workerEl.shift.start, 10) * 48}px`
+            let startTime = `${parseInt(workerEl.shift.start, 10) * 48}px`;
 
             return (
               <tr key={workerEl.number}>
                 <td className={styles.number}>{workerEl.number}</td>
                 <td className={styles.name}>{workerEl.name}</td>
-                <td className={styles.shift}>{`${workerEl.shift.start} - ${workerEl.shift.end} (${sum}h.)`}</td>
+                <td
+                  className={styles.shift}
+                >{`${workerEl.shift.start} - ${workerEl.shift.end} (${sum}h.)`}</td>
                 {numbers.map((el, z) => {
                   if (z === 0) {
                     return (
@@ -97,29 +112,38 @@ class TaskTable extends Component {
                             marginLeft: startTime,
                           }}
                           onDragOver={(e) => {
-                            e.preventDefault()
+                            e.preventDefault();
                           }}
                           onDrop={(e, task) => {
-                            e.preventDefault()
+                            e.preventDefault();
                             if (this.props.buffer) {
-                              this.props.editShift({ task: this.props.buffer, id: c + 1 })
-                              this.props.removeTask({ task: this.props.buffer, id: c + 1 })
-                              this.props.removeBufferTask()
+                              this.props.editShift({
+                                task: this.props.buffer,
+                                id: c + 1,
+                              });
+                              this.props.removeTask({
+                                task: this.props.buffer,
+                                id: c + 1,
+                              });
+                              this.props.removeBufferTask();
                             } else if (this.props.tableBufferTask) {
-                              this.props.editShift({ task: this.props.tableBufferTask, id: c + 1 })
+                              this.props.editShift({
+                                task: this.props.tableBufferTask,
+                                id: c + 1,
+                              });
                               this.props.removeShift({
                                 task: this.props.tableBufferTask,
                                 id: this.props.tableBufferTask.workerId,
-                              })
-                              this.props.removeTableBufferTask()
+                              });
+                              this.props.removeTableBufferTask();
                             }
                           }}
                         >
                           <div
-                            id={c + 100}
+                            id={`${c + 100}leftSide`}
                             className={styles.leftSide}
                             onMouseDown={(e) => {
-                              this.mouseDown(e, c)
+                              this.mouseDown(e, c);
                             }}
                           ></div>
                           {workers[c].tasks.map((el, i) => (
@@ -128,32 +152,36 @@ class TaskTable extends Component {
                               className={styles.workerTask}
                               draggable={true}
                               onDragStart={(e) => {
-                                this.props.addTableBufferTask({ ...el, workerId: c + 1 })
+                                this.props.addTableBufferTask({
+                                  ...el,
+                                  workerId: c + 1,
+                                });
                               }}
                             >
                               {el.name}
                             </div>
                           ))}
                           <div
+                            id={`${c + 100}rightSide`}
                             className={styles.rightSide}
                             onMouseDown={(e) => {
-                              this.mouseDown(e, c, time)
+                              this.mouseDown(e, c, time);
                             }}
                           ></div>
                         </div>
                         {/* </ResizableBox>/ */}
                       </td>
-                    )
+                    );
                   } else {
-                    return <td key={z} className={styles.shiftCell}></td>
+                    return <td key={z} className={styles.shiftCell}></td>;
                   }
                 })}
               </tr>
-            )
+            );
           })}
         </tbody>
       </table>
-    )
+    );
   }
 }
 const mapDispatchToProps = {
@@ -164,8 +192,12 @@ const mapDispatchToProps = {
   addTableBufferTask: actions.addTableBufferTask,
   removeTableBufferTask: actions.removeTableBufferTask,
   removeBufferTask: actions.removeBufferTask,
-}
+};
 
-const mapStateToProps = (state) => ({ workers: state.workers, buffer: state.buffer, tableBufferTask: state.tableBuffer })
+const mapStateToProps = (state) => ({
+  workers: state.workers,
+  buffer: state.buffer,
+  tableBufferTask: state.tableBuffer,
+});
 
-export default connect(mapStateToProps, mapDispatchToProps)(TaskTable)
+export default connect(mapStateToProps, mapDispatchToProps)(TaskTable);
