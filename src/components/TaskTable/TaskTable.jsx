@@ -2,12 +2,10 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import styles from "./taskTable.module.scss";
 import actions from "../../redux/actions/actions";
-// import { Resizable } from 'react-resizable';
-import ResizableBox from "react-resizable-component";
 import "./taskTable.scss";
 
 class TaskTable extends Component {
-  mouseDown = (e, c, time) => {
+  mouseDown = (e, c) => {
     let startX = e.clientX;
     const mouseUp = () => {
       window.onmousemove = null;
@@ -40,11 +38,17 @@ class TaskTable extends Component {
           }
         } else {
           // В левую сторону
-          marginLeft = prevMargin - (startX - e.clientX);
-          document.getElementById(`${c}`).style.marginLeft = `${marginLeft}px`;
+          if (
+            parseInt(document.getElementById(`${c}`).style.marginLeft, 10) > 0
+          ) {
+            marginLeft = prevMargin - (startX - e.clientX);
+            document.getElementById(
+              `${c}`,
+            ).style.marginLeft = `${marginLeft}px`;
 
-          width = prevWidth + (startX - e.clientX);
-          document.getElementById(`${c}`).style.width = `${width}px`;
+            width = prevWidth + (startX - e.clientX);
+            document.getElementById(`${c}`).style.width = `${width}px`;
+          }
         }
       } else if (elementSide === `${c + 100}rightSide`) {
         // Правый ползунок
@@ -87,10 +91,6 @@ class TaskTable extends Component {
               parseInt(workerEl.shift.start, 10);
             let time = "48px";
             time = `${parseInt(time, 10) * sum}px`;
-
-            // time = `${time + this.state.width}px`
-            // `${parseInt(time, 10) * sum}px`
-            // console.log(parseInt(time, 10) * sum)
             let startTime = `${parseInt(workerEl.shift.start, 10) * 48}px`;
 
             return (
@@ -104,7 +104,6 @@ class TaskTable extends Component {
                   if (z === 0) {
                     return (
                       <td key={z} className="shiftCell firstCell">
-                        {/* <ResizableBox > */}
                         <div
                           id={c}
                           style={{
@@ -114,7 +113,7 @@ class TaskTable extends Component {
                           onDragOver={(e) => {
                             e.preventDefault();
                           }}
-                          onDrop={(e, task) => {
+                          onDrop={(e) => {
                             e.preventDefault();
                             if (this.props.buffer) {
                               this.props.editShift({
@@ -169,7 +168,6 @@ class TaskTable extends Component {
                             }}
                           ></div>
                         </div>
-                        {/* </ResizableBox>/ */}
                       </td>
                     );
                   } else {
