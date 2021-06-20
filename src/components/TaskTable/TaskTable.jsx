@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import styles from "./taskTable.module.scss";
 import actions from "../../redux/actions/actions";
+import styles from "./taskTable.module.scss";
 import "./taskTable.scss";
 
 class TaskTable extends Component {
