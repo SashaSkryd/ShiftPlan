@@ -28,22 +28,17 @@ class TaskTable extends Component {
       );
 
       let startHours = `${Math.trunc(currentMargin / 48)}`;
-      let startMinutes = `${Math.round(
-        (currentMargin / 48 - Math.trunc(currentMargin / 48)) * 60,
-      )}`;
+      // let startMinutes = `${Math.round(
+      //   (currentMargin / 48 - Math.trunc(currentMargin / 48)) * 60,
+      // )}`;
 
       let endHours = `${
         Math.trunc(currentWidth / 48) + Math.trunc(currentMargin / 48)
       }`;
-      let endMinutes = `${
-        Math.round((currentMargin / 48 - Math.trunc(currentMargin / 48)) * 60) +
-        Math.round((currentWidth / 48 - Math.trunc(currentWidth / 48)) * 60)
-      }`;
-
-      // let sumHours = `${Math.trunc(currentWidth / 48)}`;
-      // let sumMinutes = `${Math.round(
-      //   (currentWidth / 48 - Math.trunc(currentWidth / 48)) * 60,
-      // )}`;
+      // let endMinutes = `${
+      //   Math.round((currentMargin / 48 - Math.trunc(currentMargin / 48)) * 60) +
+      //   Math.round((currentWidth / 48 - Math.trunc(currentWidth / 48)) * 60)
+      // }`;
 
       const payload = {
         id: `${c + 1}`,
