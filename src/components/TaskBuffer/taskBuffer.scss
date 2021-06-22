@@ -37,17 +37,20 @@
     height: 100%;
     position: relative;
     z-index: -2;
+    flex-wrap: wrap;
 
     & li {
-      background-color: rgb(171, 173, 11);
+      // background-color: rgb(171, 173, 11);
       height: 20px;
       border-radius: 5px;
       padding-left: 5px;
       padding-right: 5px;
       font-size: 13px;
+      transition: all 500ms linear;
 
       &:hover {
-        cursor: grab;
+        cursor: grab;  
+        transform: scale(1.2);
       }
 
       &:not(:first-child) {

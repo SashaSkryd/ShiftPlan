@@ -2,12 +2,14 @@ import React, { Component } from "react"
 import "./taskBuffer.scss"
 import actions from "../../redux/actions/actions"
 import { connect } from "react-redux"
+import Task from "../Task/Task"
 
 class TaskBuffer extends Component {
   state = {
     status: false,
     bufferOpen: false,
     height: 0,
+    // taskShow: false,
   }
 
   a = () => {
@@ -41,6 +43,18 @@ class TaskBuffer extends Component {
   removeTask = () => {
     this.props.removeTask(1)
   }
+
+  // mouseEnter=(i)=>{
+  //   this.setState({
+  //     taskShow: true
+  //   })
+  // }
+  // mouseLeave=(i)=>{
+  //   this.setState({
+  //     taskShow: false
+  //   })
+  // }
+
 
   render() {
     return (
@@ -78,8 +92,9 @@ class TaskBuffer extends Component {
                   }}
                   draggable={true}
                   key={el.id}
+                 
                 >
-                  {el.name}
+                  <Task task={el}/>
                 </li>
               )
             })}

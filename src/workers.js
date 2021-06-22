@@ -1,3 +1,11 @@
+
+const getRGB = function () {
+  let r = Math.round(Math.random() * (255 - 150) + 150)
+  let g = Math.round(Math.random() * (255 - 150) + 150)
+  let b = Math.round(Math.random() * (255 - 150) + 150)
+  return `rgb(${r}, ${g}, ${b})`
+}
+
 class Data {
   workers = [];
   getWorkers(quantity) {
@@ -31,6 +39,8 @@ class Data {
         id: `${i + 1}`,
         name: `Task name ${i + 1}`,
         shift_key: "",
+        time: Math.round(Math.random() * (3 - 1) + 1),
+        color: getRGB(),
       });
     }
 

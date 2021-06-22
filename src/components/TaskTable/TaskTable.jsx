@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import actions from "../../redux/actions/actions";
 import styles from "./taskTable.module.scss";
 import "./taskTable.scss";
+import Task from "../Task/Task"
 
 const getFormat = function (hours, minutes) {
   return `${hours.length > 1 ? hours : `0${hours}`}:${
@@ -27,19 +28,19 @@ class TaskTable extends Component {
         10,
       );
 
-      let startHours = `${Math.trunc(currentMargin / 48)}`;
+      let startHours = `${Math.round(currentMargin / 48)}`;
       // let startMinutes = `${Math.round(
-      //   (currentMargin / 48 - Math.trunc(currentMargin / 48)) * 60,
+      //   (currentMargin / 48 - Math.round(currentMargin / 48)) * 60,
       // )}`;
 
       let endHours = `${
-        Math.trunc(currentWidth / 48) + Math.trunc(currentMargin / 48)
+        Math.round(currentWidth / 48) + Math.round(currentMargin / 48)
       }`;
       // let endMinutes = `${
-      //   Math.round((currentMargin / 48 - Math.trunc(currentMargin / 48)) * 60) +
-      //   Math.round((currentWidth / 48 - Math.trunc(currentWidth / 48)) * 60)
+      //   Math.round((currentMargin / 48 - Math.round(currentMargin / 48)) * 60) +
+      //   Math.round((currentWidth / 48 - Math.round(currentWidth / 48)) * 60)
       // }`;
-
+    
       const payload = {
         id: `${c + 1}`,
         shift: {
@@ -127,13 +128,22 @@ class TaskTable extends Component {
         </thead>
         <tbody>
           {workers.map((workerEl, c) => {
-            let sum =
-              parseInt(workerEl.shift.end, 10) -
-              parseInt(workerEl.shift.start, 10);
+                let sum =
+                parseInt(workerEl.shift.end, 10) -
+                parseInt(workerEl.shift.start, 10);
+              let taskSum = 0
+                workerEl.tasks.forEach(el => {
+         
+                  taskSum += el.time 
+                })
+            
+                if (sum < taskSum){
+                  sum = taskSum 
+                }
+                // console.log(sum);
             let time = "48px";
             time = `${parseInt(time, 10) * sum}px`;
             let startTime = `${parseInt(workerEl.shift.start, 10) * 48}px`;
-
             return (
               <tr key={workerEl.number}>
                 <td className={styles.number}>{workerEl.number}</td>
@@ -146,9 +156,10 @@ class TaskTable extends Component {
                     return (
                       <td key={z} className="shiftCell firstCell">
                         <div
+                         
                           id={c}
                           style={{
-                            width: time,
+                            minWidth: time,
                             marginLeft: startTime,
                           }}
                           onDragOver={(e) => {
@@ -177,6 +188,43 @@ class TaskTable extends Component {
                               });
                               this.props.removeTableBufferTask();
                             }
+                            // ===============================================================================================================
+                            const currentMargin = parseInt(
+                              document.getElementById(`${c}`).style.marginLeft,
+                              10,
+                            );
+                            const currentWidth = parseInt(
+                              document.getElementById(`${c}`).style.minWidth,
+                              10,
+                            );
+                      
+                            let startHours = `${Math.round(currentMargin / 48)}`;
+                            // let startMinutes = `${Math.round(
+                            //   (currentMargin / 48 - Math.round(currentMargin / 48)) * 60,
+                            // )}`;
+                      
+                            let endHours = `${
+                              Math.round(currentWidth / 48) + Math.round(currentMargin / 48)
+                            }`;
+                            // let endMinutes = `${
+                            //   Math.round((currentMargin / 48 - Math.round(currentMargin / 48)) * 60) +
+                            //   Math.round((currentWidth / 48 - Math.round(currentWidth / 48)) * 60)
+                            // }`;
+                            // console.log(document.getElementById(`${c}`).style.minWidth);
+                            const payload = {
+                              id: `${c + 1}`,
+                              shift: {
+                                shift_key: `${c + 1}`,
+                                start: getFormat(startHours, "0"),
+                                end: getFormat(endHours, "0"),
+                              },
+                            };
+                            this.props.editShiftTime({
+                              
+                              ...payload, 
+                            })
+                            // ===============================================================================================================
+
                           }}
                         >
                           <div
@@ -198,7 +246,7 @@ class TaskTable extends Component {
                                 });
                               }}
                             >
-                              {el.name}
+                              <Task task={el}/>
                             </div>
                           ))}
                           <div
